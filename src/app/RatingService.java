@@ -1,9 +1,9 @@
 package app;
 
-import common.Rating;
 import common.Request;
 import common.Response;
 import com.google.gson.Gson;
+import common.Review;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -25,7 +25,7 @@ public class RatingService {
         return instance;
     }
 
-    public void postRating(Rating rating) throws IOException {
+    public void postRating(Review rating) throws IOException {
         Socket socket = new Socket("localhost", 9090);
         DataInputStream in = new DataInputStream(socket.getInputStream());
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
@@ -38,7 +38,7 @@ public class RatingService {
         socket.close();
     }
 
-    public List<Rating> getRatings() throws IOException {
+    public List<Review> getRatings() throws IOException {
         System.out.println("Get ratings");
         Socket socket = new Socket("localhost", 9090);
         DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -54,6 +54,6 @@ public class RatingService {
         out.close();
         socket.close();
 
-        return response.getRatings();
+        return response.getReviews();
     }
 }

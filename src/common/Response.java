@@ -4,18 +4,18 @@ import java.util.List;
 
 public class Response {
     private String message;
-    private List<Rating> ratings;
+    private List<Review> reviews;
 
-    public Response(String message, List<Rating> ratings) {
+    public Response(String message, List<Review> reviews) {
         this.message = message;
-        this.ratings = ratings;
+        this.reviews = reviews;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
+    public List<Review> getReviews() {
+        return reviews;
     }
 }

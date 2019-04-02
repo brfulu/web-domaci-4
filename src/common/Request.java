@@ -2,18 +2,18 @@ package common;
 
 public class Request {
     private String type;
-    private Rating rating;
+    private Review review;
 
-    public Request(String type, Rating rating) {
+    public Request(String type, Review review) {
         this.type = type;
-        this.rating = rating;
+        this.review = review;
     }
 
     public String getType() {
         return type;
     }
 
-    public Rating getRating() {
-        return rating;
+    public Review getReview() {
+        return review;
     }
 }

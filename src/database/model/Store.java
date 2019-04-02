@@ -1,29 +1,29 @@
 package database.model;
 
 import common.Assistant;
-import common.Rating;
+import common.Review;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Store {
-    private List<Rating> ratings;
+    private List<Review> reviews;
 
     public Store() {
-        this.ratings = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
-    public synchronized void addRating(Rating rating) {
-        Assistant assistant = rating.getAssistant();
+    public synchronized void addReview(Review review) {
+        Assistant assistant = review.getAssistant();
         assistant.setFirstName(assistant.getFirstName().toUpperCase());
         assistant.setLastName(assistant.getLastName().toUpperCase());
         if (assistant.getFirstName().equals("VUK")) {
-            rating.setGrade(0);
+            review.setRating(0);
         }
-        ratings.add(rating);
+        reviews.add(review);
     }
 
-    public synchronized List<Rating> getRatings() {
-        return ratings;
+    public synchronized List<Review> getRatings() {
+        return reviews;
     }
 }

@@ -1,7 +1,7 @@
 package app;
 
 import common.Assistant;
-import common.Rating;
+import common.Review;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +18,7 @@ public class RatingServlet extends HttpServlet {
         String firstName = request.getParameter("first-name").trim();
         String lastName = request.getParameter("last-name").trim();
         int grade = Integer.parseInt(request.getParameter("grade").trim());
-        RatingService.getInstance().postRating(new Rating(new Assistant(firstName, lastName), grade));
+        RatingService.getInstance().postRating(new Review(new Assistant(firstName, lastName), grade));
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -30,7 +30,7 @@ public class RatingServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Rating> ratings = RatingService.getInstance().getRatings();
+        List<Review> reviews = RatingService.getInstance().getRatings();
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -38,11 +38,11 @@ public class RatingServlet extends HttpServlet {
         out.println("<ul>");
 
         Map<Assistant, List<Integer>> ratingsMap = new HashMap<>();
-        for (Rating rating : ratings) {
+        for (Review rating : reviews) {
             if (!ratingsMap.containsKey(rating.getAssistant())) {
                 ratingsMap.put(rating.getAssistant(), new ArrayList<>());
             }
-            ratingsMap.get(rating.getAssistant()).add(rating.getGrade());
+            ratingsMap.get(rating.getAssistant()).add(rating.getRating());
         }
         for (Assistant assistant : ratingsMap.keySet()) {
             int sum = 0;

@@ -1,7 +1,7 @@
 package database.server;
 
 import com.google.gson.Gson;
-import common.Rating;
+import common.Review;
 import common.Request;
 import common.Response;
 import database.model.Store;
@@ -34,11 +34,11 @@ public class DBServerThread implements Runnable {
             Request request = gson.fromJson(json, Request.class);
             if (request.getType().equals("POST")) {
                 System.out.println("POST");
-                store.addRating(request.getRating());
+                store.addReview(request.getReview());
             } else if (request.getType().equals("GET")) {
                 System.out.println("GET");
-                List<Rating> ratings = store.getRatings();
-                Response response = new Response("OK", ratings);
+                List<Review> reviews = store.getRatings();
+                Response response = new Response("OK", reviews);
                 out.writeUTF(gson.toJson(response));
             }
 
