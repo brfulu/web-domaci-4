@@ -23,7 +23,7 @@ public class Store {
         reviews.add(review);
     }
 
-    public synchronized List<Review> getRatings() {
+    public synchronized List<Review> getReviews() {
         return reviews;
     }
 }

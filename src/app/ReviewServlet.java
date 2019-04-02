@@ -12,29 +12,31 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
-@WebServlet(name = "RatingServlet", urlPatterns = {"/rating"})
-public class RatingServlet extends HttpServlet {
+@WebServlet(name = "ReviewServlet", urlPatterns = {"/review"})
+public class ReviewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String firstName = request.getParameter("first-name").trim();
         String lastName = request.getParameter("last-name").trim();
-        int grade = Integer.parseInt(request.getParameter("grade").trim());
-        RatingService.getInstance().postRating(new Review(new Assistant(firstName, lastName), grade));
+        int grade = Integer.parseInt(request.getParameter("rating").trim());
+        ReviewService.getInstance().postReview(new Review(new Assistant(firstName, lastName), grade));
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<body><h2>Rating successfully saved:</h2>");
-        out.println("<h3><a href=\"rating-form.html\">Enter new rating</a></h3>");
-        out.println("<h3><a href=\"rating\">See all ratings</a></h3>");
+        out.println("<head><title>Leave a review</title></head>");
+        out.println("<body><h2>Review successfully saved:</h2>");
+        out.println("<h3><a href=\"review-form.html\">Enter new review</a></h3>");
+        out.println("<h3><a href=\"review\">See stats</a></h3>");
         out.println("</body>");
         out.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Review> reviews = RatingService.getInstance().getRatings();
+        List<Review> reviews = ReviewService.getInstance().getReviews();
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<body><h2>Ratings:</h2>");
+        out.println("<head><title>Stats</title></head>");
+        out.println("<body><h2>Review Stats:</h2>");
         out.println("<ul>");
 
         Map<Assistant, List<Integer>> ratingsMap = new HashMap<>();
@@ -45,17 +47,17 @@ public class RatingServlet extends HttpServlet {
             ratingsMap.get(rating.getAssistant()).add(rating.getRating());
         }
         for (Assistant assistant : ratingsMap.keySet()) {
-            int sum = 0;
             int size = ratingsMap.get(assistant).size();
+            int sum = 0;
             for (int grade : ratingsMap.get(assistant)) {
                 sum += grade;
             }
-            double avgGrade = sum / (double)(size);
+            double avgGrade = sum / (double) (size);
             out.println("<li>" + assistant.getFirstName() + " " + assistant.getLastName() + ": " + avgGrade + "</li>");
         }
 
         out.print("</ul><br>");
-        out.println("<h3><a href=\"rating-form.html\">Enter new rating</a></h3>");
+        out.println("<h3><a href=\"review-form.html\">Enter new review</a></h3>");
         out.println("</body>");
         out.close();
     }

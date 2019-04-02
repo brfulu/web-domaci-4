@@ -11,26 +11,26 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
 
-public class RatingService {
-    private static RatingService instance = null;
+public class ReviewService {
+    private static ReviewService instance = null;
     private Gson gson;
 
-    private RatingService() {
+    private ReviewService() {
         this.gson = new Gson();
     }
 
-    public static RatingService getInstance() {
+    public static ReviewService getInstance() {
         if (instance == null)
-            instance = new RatingService();
+            instance = new ReviewService();
         return instance;
     }
 
-    public void postRating(Review rating) throws IOException {
+    public void postReview(Review review) throws IOException {
         Socket socket = new Socket("localhost", 9090);
         DataInputStream in = new DataInputStream(socket.getInputStream());
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-        Request request = new Request("POST", rating);
+        Request request = new Request("POST", review);
         out.writeUTF(gson.toJson(request));
 
         in.close();
@@ -38,8 +38,7 @@ public class RatingService {
         socket.close();
     }
 
-    public List<Review> getRatings() throws IOException {
-        System.out.println("Get ratings");
+    public List<Review> getReviews() throws IOException {
         Socket socket = new Socket("localhost", 9090);
         DataInputStream in = new DataInputStream(socket.getInputStream());
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());

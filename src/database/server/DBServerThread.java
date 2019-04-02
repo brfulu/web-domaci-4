@@ -37,7 +37,7 @@ public class DBServerThread implements Runnable {
                 store.addReview(request.getReview());
             } else if (request.getType().equals("GET")) {
                 System.out.println("GET");
-                List<Review> reviews = store.getRatings();
+                List<Review> reviews = store.getReviews();
                 Response response = new Response("OK", reviews);
                 out.writeUTF(gson.toJson(response));
             }
